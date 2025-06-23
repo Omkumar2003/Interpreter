@@ -1,0 +1,9 @@
+# Factorial example in the custom language
+definekar factorial = fn(n) {
+    agar (n == 0) {
+        1
+    } warna {
+        n * factorial(n - 1)
+    }
+};
+factorial(5); 

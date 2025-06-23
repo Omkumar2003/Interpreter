@@ -26,9 +26,9 @@ func TestLetStatements(t *testing.T) {
 		expectedIdentifier string
 		expectedValue      interface{}
 	}{
-		{"let x = 5;", "x", 5},
-		{"let y = true;", "y", true},
-		{"let foobar = y;", "foobar", "y"},
+		{"definekar x = 5;", "x", 5},
+		{"definekar y = true;", "y", true},
+		{"definekar foobar = y;", "foobar", "y"},
 	}
 	for _, tt := range tests {
 		l := lexer.New(tt.input)
@@ -50,8 +50,8 @@ func TestLetStatements(t *testing.T) {
 	}
 }
 func testLetStatement(t *testing.T, s ast.Statement, name string) bool {
-	if s.TokenLiteral() != "let" {
-		t.Errorf("s.TokenLiteral not 'let'. got=%q", s.TokenLiteral())
+	if s.TokenLiteral() != "definekar" {
+		t.Errorf("s.TokenLiteral not 'definekar'. got=%q", s.TokenLiteral())
 		return false
 	}
 	letStmt, ok := s.(*ast.LetStatement)
@@ -508,7 +508,7 @@ func TestBooleanExpression(t *testing.T) {
 }
 
 func TestIfExpression(t *testing.T) {
-	input := `if (x < y) { x }`
+	input := `agar (x < y) { x }`
 	l := lexer.New(input)
 	p := New(l)
 	program := p.ParseProgram()
@@ -555,7 +555,7 @@ func TestIfExpression(t *testing.T) {
 }
 
 func TestIfElseExpression(t *testing.T) {
-	input := `if (x < y) { x } else { y }`
+	input := `agar (x < y) { x } warna { y }`
 
 	l := lexer.New(input)
 	p := New(l)

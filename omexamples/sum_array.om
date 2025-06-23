@@ -1,0 +1,20 @@
+# Sum array example
+definekar sumArray = fn(arr) {
+    definekar sum = 0;
+    definekar i = 0;
+    agar (i < len(arr)) {
+        sum = sum + arr[i];
+        i = i + 1;
+        sumArrayHelper(arr, i, sum)
+    } warna {
+        sum
+    }
+};
+definekar sumArrayHelper = fn(arr, i, sum) {
+    agar (i < len(arr)) {
+        sumArrayHelper(arr, i + 1, sum + arr[i])
+    } warna {
+        sum
+    }
+};
+sumArray([1, 2, 3, 4, 5]); 

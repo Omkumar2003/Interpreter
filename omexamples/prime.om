@@ -1,0 +1,30 @@
+# Prime check example
+definekar isPrime = fn(n) {
+    definekar i = 2;
+    agar (n < 2) {
+        false
+    } warna {
+        agar (i < n) {
+            agar (n % i == 0) {
+                false
+            } warna {
+                i = i + 1;
+                isPrimeHelper(n, i)
+            }
+        } warna {
+            true
+        }
+    }
+};
+definekar isPrimeHelper = fn(n, i) {
+    agar (i < n) {
+        agar (n % i == 0) {
+            false
+        } warna {
+            isPrimeHelper(n, i + 1)
+        }
+    } warna {
+        true
+    }
+};
+isPrime(17); 

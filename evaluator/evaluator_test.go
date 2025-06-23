@@ -128,13 +128,13 @@ func TestIfElseExpressions(t *testing.T) {
 		input    string
 		expected interface{}
 	}{
-		{"if (true) { 10 }", 10},
-		{"if (false) { 10 }", nil},
-		{"if (1) { 10 }", 10},
-		{"if (1 < 2) { 10 }", 10},
-		{"if (1 > 2) { 10 }", nil},
-		{"if (1 > 2) { 10 } else { 20 }", 20},
-		{"if (1 < 2) { 10 } else { 20 }", 10},
+		{"agar (true) { 10 }", 10},
+		{"agar (false) { 10 }", nil},
+		{"agar (1) { 10 }", 10},
+		{"agar (1 < 2) { 10 }", 10},
+		{"agar (1 > 2) { 10 }", nil},
+		{"agar (1 > 2) { 10 } warna { 20 }", 20},
+		{"agar (1 < 2) { 10 } warna { 20 }", 10},
 	}
 	for _, tt := range tests {
 		evaluated := testEval(tt.input)
@@ -253,10 +253,10 @@ func TestLetStatements(t *testing.T) {
 		input    string
 		expected int64
 	}{
-		{"let a = 5; a;", 5},
-		{"let a = 5 * 5; a;", 25},
-		{"let a =5; let b = a; b;", 5},
-		{"let a =5; let b = a; let c = a + b + 5; c;", 15},
+		{"definekar a = 5; a;", 5},
+		{"definekar a = 5 * 5; a;", 25},
+		{"definekar a =5; definekar b = a; b;", 5},
+		{"definekar a =5; definekar b = a; definekar c = a + b + 5; c;", 15},
 	}
 
 	for _, tt := range tests {
@@ -293,11 +293,11 @@ func TestFunctionApplication(t *testing.T) {
 		input    string
 		expected int64
 	}{
-		{"let identity = fn(x) { x; }; identity(5);", 5},
-		{"let identity = fn(x) { return x; }; identity(5);", 5},
-		{"let double = fn(x) { x * 2; }; double(5);", 10},
-		{"let add = fn(x, y) { x + y; }; add(5, 5);", 10},
-		{"let add = fn(x, y) { x + y; }; add(5 + 5, add(5, 5));", 20},
+		{"definekar identity = fn(x) { x; }; identity(5);", 5},
+		{"definekar identity = fn(x) { return x; }; identity(5);", 5},
+		{"definekar double = fn(x) { x * 2; }; double(5);", 10},
+		{"definekar add = fn(x, y) { x + y; }; add(5, 5);", 10},
+		{"definekar add = fn(x, y) { x + y; }; add(5 + 5, add(5, 5));", 20},
 		{"fn(x) { x; }(5)", 5},
 	}
 

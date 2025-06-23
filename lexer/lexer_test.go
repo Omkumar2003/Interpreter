@@ -8,12 +8,17 @@ import (
 )
 
 func TestNextToken(t *testing.T) {
-	input := `let five = 5;
-	let ten = 10;
-	let add = fn(x, y) {
+	input := `definekar five = 5;
+	definekar ten = 10;
+	definekar add = fn(x, y) {
 	x + y;
 	};
-	let result = add(five, ten);
+	definekar result = add(five, ten);
+	agar (result == 20) {
+		result
+	} warna {
+		0
+	}
 	!-/*5;
 	5 < 10 > 5;
 	if (5 < 10) {
@@ -34,17 +39,17 @@ func TestNextToken(t *testing.T) {
 		expectedType    token.TokenType
 		expectedLiteral string
 	}{
-		{token.LET, "let"},
+		{token.LET, "definekar"},
 		{token.IDENT, "five"},
 		{token.ASSIGN, "="},
 		{token.INT, "5"},
 		{token.SEMICOLON, ";"},
-		{token.LET, "let"},
+		{token.LET, "definekar"},
 		{token.IDENT, "ten"},
 		{token.ASSIGN, "="},
 		{token.INT, "10"},
 		{token.SEMICOLON, ";"},
-		{token.LET, "let"},
+		{token.LET, "definekar"},
 		{token.IDENT, "add"},
 		{token.ASSIGN, "="},
 		{token.FUNCTION, "fn"},
@@ -60,7 +65,7 @@ func TestNextToken(t *testing.T) {
 		{token.SEMICOLON, ";"},
 		{token.RBRACE, "}"},
 		{token.SEMICOLON, ";"},
-		{token.LET, "let"},
+		{token.LET, "definekar"},
 		{token.IDENT, "result"},
 		{token.ASSIGN, "="},
 		{token.IDENT, "add"},
@@ -70,6 +75,23 @@ func TestNextToken(t *testing.T) {
 		{token.IDENT, "ten"},
 		{token.RPAREN, ")"},
 		{token.SEMICOLON, ";"},
+		{token.IF, "agar"},
+		{token.LPAREN, "("},
+		{token.IDENT, "result"},
+		{token.EQ, "=="},
+		{token.INT, "20"},
+		{token.RPAREN, ")"},
+		{token.LBRACE, "{"},
+		{token.RETURN, "return"},
+		{token.IDENT, "result"},
+		{token.SEMICOLON, ";"},
+		{token.RBRACE, "}"},
+		{token.ELSE, "warna"},
+		{token.LBRACE, "{"},
+		{token.RETURN, "return"},
+		{token.INT, "0"},
+		{token.SEMICOLON, ";"},
+		{token.RBRACE, "}"},
 		{token.BANG, "!"},
 		{token.MINUS, "-"},
 		{token.SLASH, "/"},

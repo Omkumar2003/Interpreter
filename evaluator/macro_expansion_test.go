@@ -11,9 +11,14 @@ import (
 
 func TestDefineMacros(t *testing.T) {
 	input := `
-	let number = 1;
-	let function = fn(x, y) { x + y };
-	let mymacro = macro(x, y) { x + y; };
+	definekar number = 1;
+	definekar function = fn(x, y) { x + y };
+	definekar mymacro = macro(x, y) { x + y; };
+	definekar infixExpression = macro() { quote(1 + 2); };
+	definekar reverse = macro(a, b) { quote(unquote(b) - unquote(a)); };
+	definekar unless = macro(condition, consequence, alternative) {
+		agar (!condition) { consequence } warna { alternative }
+	};
 	`
 
 	env := object.NewEnvironment()
@@ -98,7 +103,7 @@ func TestExpandMacros(t *testing.T) {
 			
 			unless(10 > 5, puts("not greater"), puts("greater"));
 			`,
-			`if (!(10 > 5)) { puts("not greater") } else { puts("greater") }`,
+			`agar (!(10 > 5)) { puts("not greater") } warna { puts("greater") }`,
 		},
 	}
 

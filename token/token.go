@@ -56,14 +56,14 @@ const (
 )
 
 var keywords = map[string]TokenType{
-	"fn":     FUNCTION,
-	"let":    LET,
-	"true":   TRUE,
-	"false":  FALSE,
-	"if":     IF,
-	"else":   ELSE,
-	"return": RETURN,
-	"macro":  MACRO,
+	"fn":        FUNCTION,
+	"definekar": LET,
+	"true":      TRUE,
+	"false":     FALSE,
+	"agar":      IF,
+	"warna":     ELSE,
+	"return":    RETURN,
+	"macro":     MACRO,
 }
 
 func LookupIdent(ident string) TokenType {

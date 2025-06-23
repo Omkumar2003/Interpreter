@@ -1,5 +1,5 @@
-let add = fn(a, b) { a + b };
-let sub = fn(a, b) { a - b };
-let applyFunc = fn(a, b, func) { func(a, b) };
+definekar add = fn(a, b) { a + b };
+definekar sub = fn(a, b) { a - b };
+definekar applyFunc = fn(a, b, func) { func(a, b) };
 applyFunc(2, 2, add);
 

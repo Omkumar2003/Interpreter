@@ -1,0 +1,11 @@
+# Fibonacci example in the custom language
+definekar fib = fn(n) {
+    agar (n == 0) {
+        0
+    } warna agar (n == 1) {
+        1
+    } warna {
+        fib(n - 1) + fib(n - 2)
+    }
+};
+fib(10); 
