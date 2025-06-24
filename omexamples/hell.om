@@ -1,4 +1,4 @@
-definekar a = 10;
-definekar b = 50;
-definekar arr = [12 , 50 , 30 , 50];
+let a = 10;
+let b = 50;
+let arr = [12 , 50 , 30 , 50];
 puts(index(arr,3));

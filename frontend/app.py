@@ -35,10 +35,6 @@ def run_code():
 def learn():
     return render_template('learn.html')
 
-@app.route('/tutorial')
-def tutorial():
-    return render_template('tutorial.html')
-
 # Ensure omexamples are available in static/examples
 examples_src = os.path.join(os.path.dirname(__file__), '..', 'omexamples')
 examples_dst = os.path.join(os.path.dirname(__file__), 'static', 'examples')
@@ -47,23 +43,27 @@ if not os.path.exists(examples_dst):
 for fname in os.listdir(examples_src):
     shutil.copy(os.path.join(examples_src, fname), os.path.join(examples_dst, fname))
 
+@app.route('/example/<path:filename>')
+def view_example(filename):
+    try:
+        example_path = os.path.join(app.root_path, 'static', 'examples', filename)
+        with open(example_path, 'r', encoding='utf-8') as f:
+            code = f.read()
+        return render_template('code_viewer.html', filename=filename, code=code)
+    except FileNotFoundError:
+        return "Example not found", 404
+
 @app.route('/static/examples/<path:filename>')
 def example_files(filename):
     return send_from_directory(os.path.join(app.root_path, 'static', 'examples'), filename)
 
-@app.route('/example/<filename>')
-def example_repl(filename):
-    example_path = os.path.join(app.root_path, 'static', 'examples', filename)
-    code = ''
-    if os.path.exists(example_path):
-        with open(example_path, 'r', encoding='utf-8') as f:
-            code = f.read()
-    return render_template('index.html', example_code=code)
-
 @app.route('/download/om.exe')
-def download_compiler():
-    exe_path = os.path.join(os.path.dirname(__file__), '..', 'main.exe')
-    return send_from_directory(os.path.dirname(exe_path), os.path.basename(exe_path), as_attachment=True)
+def download_exe():
+    exe_path = os.path.join(os.path.dirname(__file__), '..', 'om.exe')
+    if os.path.exists(exe_path):
+        return send_from_directory(os.path.dirname(exe_path), 'om.exe', as_attachment=True)
+    else:
+        return "om.exe not found. Please build the executable first.", 404
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0') 

@@ -1,0 +1,8 @@
+# Simple math operations
+definekar add = fn(a, b) { a + b };
+definekar multiply = fn(a, b) { a * b };
+definekar square = fn(x) { x * x };
+ 
+add(5, 3);
+multiply(4, 7);
+square(6); 

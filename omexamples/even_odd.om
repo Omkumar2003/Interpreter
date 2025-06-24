@@ -1,0 +1,17 @@
+# Even/Odd check example
+definekar isEven = fn(n) {
+    agar (n == (n / 2) * 2) {
+        true
+    } warna {
+        false
+    }
+};
+definekar isOdd = fn(n) {
+    agar (isEven(n)) {
+        false
+    } warna {
+        true
+    }
+};
+isEven(10);
+isOdd(7); 

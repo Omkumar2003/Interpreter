@@ -164,9 +164,11 @@ func (p *Parser) parseStatement() ast.Statement {
 		return p.parseExpressionStatement()
 	}
 }
+// ... other code ...
 
 func (p *Parser) parseLetStatement() *ast.LetStatement {
 	stmt := &ast.LetStatement{Token: p.curToken}
+
 	if !p.expectPeek(token.IDENT) {
 		return nil
 	}
@@ -181,9 +183,16 @@ func (p *Parser) parseLetStatement() *ast.LetStatement {
 
 	stmt.Value = p.parseExpression(LOWEST)
 
-	for !p.curTokenIs(token.SEMICOLON) {
+	// CHANGE THIS:
+	// Replace the dangerous for-loop...
+	// for !p.curTokenIs(token.SEMICOLON) {
+	// 	p.nextToken()
+	// }
+	// ...with this safe peeking logic.
+	if p.peekTokenIs(token.SEMICOLON) {
 		p.nextToken()
 	}
+
 	return stmt
 }
 
@@ -194,11 +203,20 @@ func (p *Parser) parseReturnStatement() *ast.ReturnStatement {
 
 	stmt.ReturnValue = p.parseExpression(LOWEST)
 
-	for !p.curTokenIs(token.SEMICOLON) {
+	// CHANGE THIS:
+	// Replace the dangerous for-loop...
+	// for !p.curTokenIs(token.SEMICOLON) {
+	// 	p.nextToken()
+	// }
+	// ...with this safe peeking logic.
+	if p.peekTokenIs(token.SEMICOLON) {
 		p.nextToken()
 	}
+
 	return stmt
 }
+
+// ... rest of the file ...
 
 func (p *Parser) parseExpressionStatement() *ast.ExpressionStatement {
 	stmt := &ast.ExpressionStatement{Token: p.curToken}

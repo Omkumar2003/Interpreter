@@ -1,53 +1,319 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <title>Learn the Language</title>
+    <title>Learn the Language - OM Interpreter</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        pre { background: #f4f4f4; padding: 10px; border: 1px solid #ccc; }
-        a { color: #0074d9; }
+        :root[data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --border-color: #e0e0e0;
+            --accent-color: #0074d9;
+            --success-color: #28a745;
+            --code-bg: #f4f4f4;
+        }
+        
+        :root[data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: #404040;
+            --accent-color: #4dabf7;
+            --success-color: #51cf66;
+            --code-bg: #2d2d2d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .logo:hover {
+            color: var(--success-color);
+        }
+        
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+            background-color: var(--bg-secondary);
+        }
+        
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            background-color: var(--bg-secondary);
+            border-color: var(--accent-color);
+        }
+        
+        .content-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .content-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+        
+        .content-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+        
+        .section {
+            background-color: var(--bg-secondary);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+        
+        .section h2 {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        pre {
+            background-color: var(--code-bg);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+        
+        .examples-section {
+            background-color: var(--bg-secondary);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .examples-section h2 {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .examples-list {
+            list-style: none;
+        }
+        
+        .examples-list li {
+            margin-bottom: 12px;
+        }
+        
+        .examples-list a {
+            color: var(--accent-color);
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .examples-list a:hover {
+            background-color: var(--code-bg);
+            color: var(--success-color);
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: var(--accent-color);
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 1px solid var(--accent-color);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-link:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .content-header h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>Learn the Language</h1>
-    <p>Welcome! Here are the basics of your language:</p>
-    <h2>Variables</h2>
-    <pre>definekar x = 5;
-definekar y = 10;
-</pre>
-    <h2>Functions</h2>
-    <pre>definekar add = fn(a, b) {
+    <div class="container">
+        <header class="header">
+            <a href="/" class="logo">OM Interpreter</a>
+            <div class="nav-controls">
+                <div class="nav-links">
+                    <a href="/">Home</a>
+                    <a href="https://github.com/Omkumar2003/Interpreter" target="_blank">GitHub</a>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <span id="theme-icon">🌙</span>
+                </button>
+            </div>
+        </header>
+        
+        <div class="content-header">
+            <h1>Learn the Language</h1>
+            <p>Master the OM programming language with Hindi-inspired keywords</p>
+        </div>
+        
+        <section class="section">
+            <h2>Variables</h2>
+            <p>Declare variables using <code>definekar</code>:</p>
+            <pre>definekar x = 5;
+definekar y = 10;</pre>
+        </section>
+        
+        <section class="section">
+            <h2>Functions</h2>
+            <p>Create functions using <code>fn</code>:</p>
+            <pre>definekar add = fn(a, b) {
     a + b
 };
-add(2, 3);
-</pre>
-    <h2>Conditionals</h2>
-    <pre>agar (x > 5) {
+add(2, 3);</pre>
+        </section>
+        
+        <section class="section">
+            <h2>Conditionals</h2>
+            <p>Use <code>agar</code> (if) and <code>warna</code> (else):</p>
+            <pre>agar (x > 5) {
     10
 } warna {
     20
-}
-</pre>
-    <h2>Recursion</h2>
-    <pre>definekar factorial = fn(n) {
+}</pre>
+        </section>
+        
+        <section class="section">
+            <h2>Recursion</h2>
+            <p>Create recursive functions:</p>
+            <pre>definekar factorial = fn(n) {
     agar (n == 0) {
         1
     } warna {
         n * factorial(n - 1)
     }
 };
-factorial(5);
-</pre>
-    <h2>Examples</h2>
-    <ul>
-        <li><a href="/example/abc.om" target="_blank">abc.om</a> – Basic functions and higher-order functions</li>
-        <li><a href="/example/hell.om" target="_blank">hell.om</a> – Arrays and indexing</li>
-        <li><a href="/example/factorial.om" target="_blank">factorial.om</a> – Recursive factorial</li>
-        <li><a href="/example/fibonacci.om" target="_blank">fibonacci.om</a> – Recursive Fibonacci</li>
-        <li><a href="/example/prime.om" target="_blank">prime.om</a> – Prime number check</li>
-        <li><a href="/example/sum_array.om" target="_blank">sum_array.om</a> – Sum all elements in an array</li>
-    </ul>
-    <p><a href="/">Back to REPL</a></p>
+factorial(5);</pre>
+        </section>
+        
+        <section class="examples-section">
+            <h2>Examples</h2>
+            <ul class="examples-list">
+                <li><a href="/example/abc.om" target="_blank">abc.om</a> – Basic functions and higher-order functions</li>
+                <li><a href="/example/hell.om" target="_blank">hell.om</a> – Arrays and indexing</li>
+                <li><a href="/example/factorial.om" target="_blank">factorial.om</a> – Recursive factorial</li>
+                <li><a href="/example/fibonacci.om" target="_blank">fibonacci.om</a> – Recursive Fibonacci</li>
+                <li><a href="/example/prime.om" target="_blank">prime.om</a> – Prime number check (without modulo)</li>
+                <li><a href="/example/sum_array.om" target="_blank">sum_array.om</a> – Sum all elements in an array</li>
+                <li><a href="/example/simple_math.om" target="_blank">simple_math.om</a> – Basic math operations</li>
+                <li><a href="/example/array_ops.om" target="_blank">array_ops.om</a> – Array builtin functions</li>
+                <li><a href="/example/even_odd.om" target="_blank">even_odd.om</a> – Even/Odd number check</li>
+            </ul>
+        </section>
+        
+        <a href="/" class="back-link">← Back to REPL</a>
+    </div>
+    
+    <script>
+        // Theme management
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            html.setAttribute('data-theme', newTheme);
+            themeIcon.textContent = newTheme === 'light' ? '🌙' : '☀️';
+            localStorage.setItem('theme', newTheme);
+        }
+        
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        document.getElementById('theme-icon').textContent = savedTheme === 'light' ? '🌙' : '☀️';
+    </script>
 </body>
 </html> 

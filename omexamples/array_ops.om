@@ -1,0 +1,7 @@
+# Array operations example
+definekar arr = [1, 2, 3, 4, 5];
+len(arr);
+first(arr);
+last(arr);
+rest(arr);
+push(arr, 6); 

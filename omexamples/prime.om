@@ -1,24 +1,14 @@
-# Prime check example
+# Prime check example (without modulo)
 definekar isPrime = fn(n) {
-    definekar i = 2;
     agar (n < 2) {
         false
     } warna {
-        agar (i < n) {
-            agar (n % i == 0) {
-                false
-            } warna {
-                i = i + 1;
-                isPrimeHelper(n, i)
-            }
-        } warna {
-            true
-        }
+        isPrimeHelper(n, 2)
     }
 };
 definekar isPrimeHelper = fn(n, i) {
     agar (i < n) {
-        agar (n % i == 0) {
+        agar (n == (n / i) * i) {
             false
         } warna {
             isPrimeHelper(n, i + 1)
