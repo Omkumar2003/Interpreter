@@ -1,4 +1,4 @@
-name: Build, Test, Dockerize & Push
+name: Go Docker CI
 
 on:
   push:
@@ -15,37 +15,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    # --- Python / Flask Tests ---
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.10'
-
-    - name: Install Python dependencies
-      run: |
-        cd flask
-        python -m venv venv
-        source venv/bin/activate
-        pip install -r requirements.txt
-
-    - name: Run Flask tests
-      run: |
-        cd flask
-        source venv/bin/activate
-        pytest
-
-    # --- Go Tests ---
     - name: Set up Go
       uses: actions/setup-go@v5
       with:
         go-version: '1.21'
 
     - name: Run Go tests
-      run: |
-        cd go
-        go test ./...
+      run: go test ./...
 
-    # --- Docker Build & Push ---
     - name: Log in to DockerHub
       uses: docker/login-action@v3
       with:
@@ -58,11 +35,9 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build . -t my-image-name:latest -t my-image-name:${{ steps.vars.outputs.sha_short }}
+        docker build . -t omkumar2003/interpreter:latest -t omkumar2003/interpreter:${{ steps.vars.outputs.sha_short }}
 
     - name: Push Docker images
       run: |
-        docker tag my-image-name:latest ${{ secrets.DOCKERHUB_USERNAME }}/my-image-name:latest
-        docker tag my-image-name:${{ steps.vars.outputs.sha_short }} ${{ secrets.DOCKERHUB_USERNAME }}/my-image-name:${{ steps.vars.outputs.sha_short }}
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-image-name:latest
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-image-name:${{ steps.vars.outputs.sha_short }}
+        docker push omkumar2003/interpreter:latest
+        docker push omkumar2003/interpreter:${{ steps.vars.outputs.sha_short }}
